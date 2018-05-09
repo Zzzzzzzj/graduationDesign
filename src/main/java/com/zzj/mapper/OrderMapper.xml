@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zzj.mapper.OrderMapper" >
+  <resultMap id="BaseResultMap" type="com.zzj.model.Order" >
+    <id column="oid" property="oid" jdbcType="VARCHAR" />
+    <result column="ordertime" property="ordertime" jdbcType="VARCHAR" />
+    <result column="pid" property="pid" jdbcType="VARCHAR" />
+    <result column="pname" property="pname" jdbcType="VARCHAR" />
+    <result column="shop_price" property="shopPrice" jdbcType="DOUBLE" />
+    <result column="pronum" property="pronum" jdbcType="INTEGER" />
+    <result column="buyername" property="buyername" jdbcType="VARCHAR" />
+    <result column="addr" property="addr" jdbcType="VARCHAR" />
+    <result column="telephone" property="telephone" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    oid, ordertime, pid, pname, shop_price, pronum, buyername, addr, telephone, state
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zzj.model.OrderExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from order
+    where oid = #{oid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from order
+    where oid = #{oid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zzj.model.OrderExample" >
+    delete from order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zzj.model.Order" >
+    insert into order (oid, ordertime, pid, 
+      pname, shop_price, pronum, 
+      buyername, addr, telephone, 
+      state)
+    values (#{oid,jdbcType=VARCHAR}, #{ordertime,jdbcType=VARCHAR}, #{pid,jdbcType=VARCHAR}, 
+      #{pname,jdbcType=VARCHAR}, #{shopPrice,jdbcType=DOUBLE}, #{pronum,jdbcType=INTEGER}, 
+      #{buyername,jdbcType=VARCHAR}, #{addr,jdbcType=VARCHAR}, #{telephone,jdbcType=VARCHAR}, 
+      #{state,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zzj.model.Order" >
+    insert into order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="oid != null" >
+        oid,
+      </if>
+      <if test="ordertime != null" >
+        ordertime,
+      </if>
+      <if test="pid != null" >
+        pid,
+      </if>
+      <if test="pname != null" >
+        pname,
+      </if>
+      <if test="shopPrice != null" >
+        shop_price,
+      </if>
+      <if test="pronum != null" >
+        pronum,
+      </if>
+      <if test="buyername != null" >
+        buyername,
+      </if>
+      <if test="addr != null" >
+        addr,
+      </if>
+      <if test="telephone != null" >
+        telephone,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="oid != null" >
+        #{oid,jdbcType=VARCHAR},
+      </if>
+      <if test="ordertime != null" >
+        #{ordertime,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null" >
+        #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="pname != null" >
+        #{pname,jdbcType=VARCHAR},
+      </if>
+      <if test="shopPrice != null" >
+        #{shopPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="pronum != null" >
+        #{pronum,jdbcType=INTEGER},
+      </if>
+      <if test="buyername != null" >
+        #{buyername,jdbcType=VARCHAR},
+      </if>
+      <if test="addr != null" >
+        #{addr,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null" >
+        #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zzj.model.OrderExample" resultType="java.lang.Integer" >
+    select count(*) from order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update order
+    <set >
+      <if test="record.oid != null" >
+        oid = #{record.oid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ordertime != null" >
+        ordertime = #{record.ordertime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pid != null" >
+        pid = #{record.pid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pname != null" >
+        pname = #{record.pname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopPrice != null" >
+        shop_price = #{record.shopPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="record.pronum != null" >
+        pronum = #{record.pronum,jdbcType=INTEGER},
+      </if>
+      <if test="record.buyername != null" >
+        buyername = #{record.buyername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addr != null" >
+        addr = #{record.addr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.telephone != null" >
+        telephone = #{record.telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.state != null" >
+        state = #{record.state,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update order
+    set oid = #{record.oid,jdbcType=VARCHAR},
+      ordertime = #{record.ordertime,jdbcType=VARCHAR},
+      pid = #{record.pid,jdbcType=VARCHAR},
+      pname = #{record.pname,jdbcType=VARCHAR},
+      shop_price = #{record.shopPrice,jdbcType=DOUBLE},
+      pronum = #{record.pronum,jdbcType=INTEGER},
+      buyername = #{record.buyername,jdbcType=VARCHAR},
+      addr = #{record.addr,jdbcType=VARCHAR},
+      telephone = #{record.telephone,jdbcType=VARCHAR},
+      state = #{record.state,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zzj.model.Order" >
+    update order
+    <set >
+      <if test="ordertime != null" >
+        ordertime = #{ordertime,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null" >
+        pid = #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="pname != null" >
+        pname = #{pname,jdbcType=VARCHAR},
+      </if>
+      <if test="shopPrice != null" >
+        shop_price = #{shopPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="pronum != null" >
+        pronum = #{pronum,jdbcType=INTEGER},
+      </if>
+      <if test="buyername != null" >
+        buyername = #{buyername,jdbcType=VARCHAR},
+      </if>
+      <if test="addr != null" >
+        addr = #{addr,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null" >
+        telephone = #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where oid = #{oid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zzj.model.Order" >
+    update order
+    set ordertime = #{ordertime,jdbcType=VARCHAR},
+      pid = #{pid,jdbcType=VARCHAR},
+      pname = #{pname,jdbcType=VARCHAR},
+      shop_price = #{shopPrice,jdbcType=DOUBLE},
+      pronum = #{pronum,jdbcType=INTEGER},
+      buyername = #{buyername,jdbcType=VARCHAR},
+      addr = #{addr,jdbcType=VARCHAR},
+      telephone = #{telephone,jdbcType=VARCHAR},
+      state = #{state,jdbcType=VARCHAR}
+    where oid = #{oid,jdbcType=VARCHAR}
+  </update>
+</mapper>
